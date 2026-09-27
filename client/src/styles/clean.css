@@ -1,0 +1,170 @@
+/* Clean CSS overrides to fix corrupted styles and remove animations */
+
+.contact-item.selected {
+  /* No merge/transform animations - keep it simple, no border lines */
+  background: rgba(0, 0, 0, 0.03) !important;
+  color: inherit !important;
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-left: none !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(250, 151, 39, 0.1);
+  border-color: #FA9727;
+}
+
+.online-indicator {
+  width: 8px;
+  height: 8px;
+  background: #FBBF24;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+/* Update color scheme to match homepage */
+* {
+  --primary-color: #FA9727 !important;
+}
+
+/* Override any old blue/green backgrounds */
+.bg-green-400,
+.bg-green-500,
+.bg-green-600,
+.bg-green-700,
+.bg-blue-400,
+.bg-blue-500 {
+  background-color: #FA9727 !important;
+}
+
+/* Override text colors */
+.text-green-400,
+.text-green-500,
+.text-green-600,
+.text-blue-400,
+.text-blue-500 {
+  color: #FA9727 !important;
+}
+
+/* Override borders */
+.border-green-400,
+.border-green-500,
+.border-blue-400,
+.border-blue-500 {
+  border-color: #FA9727 !important;
+}
+
+/* Clean up any remaining green gradients */
+.bg-gradient-to-br {
+  background: #0A3D62 !important;
+}
+
+/* Force hero section to use orange-coral gradient (extends under header up to features) */
+.hero-section {
+  background: linear-gradient(135deg, #EA580C 0%, #F97316 40%, #FB923C 80%, #FDBA74 100%) !important;
+  color: #ffffff !important;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+/* Hero typography and responsive adjustments */
+.hero-title {
+  color: #FFFFFF;
+  font-size: 4.5rem;
+  line-height: 1.1;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.hero-title-highlight { 
+  background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-lead { 
+  color: #FFF7ED; 
+  font-size: 1.5rem; 
+  font-weight: 500; 
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  line-height: 1.8;
+}
+
+/* Features section adjustments to sit below the gradient band */
+.features-title { color: #EA580C; font-size: 3.5rem; font-weight: 800; }
+.features-subtitle { color: #475569; font-size: 1.4rem; font-weight: 500; }
+
+/* Make features cards stack on small screens and tighten spacing */
+@media (max-width: 767.98px) {
+  .hero-section { padding: 2.5rem 0; min-height: auto; }
+  .hero-title { font-size: 2.5rem !important; }
+  .hero-lead { font-size: 1.2rem !important; }
+  .chat-preview { max-width: 320px !important; margin: 1rem auto; }
+  .features-title { font-size: 2rem !important; }
+  .features-subtitle { font-size: 1.1rem !important; }
+  .feature-card { flex-direction: column !important; gap: 1rem; }
+  .feature-card .feature-icon-new { margin-bottom: 0.75rem; }
+}
+
+/* Small neutral scrollbars for chat and sidebars */
+.chat-messages-scroll::-webkit-scrollbar,
+.chat-sidebar-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-messages-scroll::-webkit-scrollbar-track,
+.chat-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-messages-scroll::-webkit-scrollbar-thumb,
+.chat-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 6px;
+}
+/* Firefox */
+.chat-messages-scroll,
+.chat-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.12) transparent;
+}
+
+/* Message bubble color scheme for teal/cyan & white theme */
+.message-bubble.bg-primary {
+  background-color: #0891B2 !important; /* teal */
+  color: #FFFFFF !important;
+}
+.message-bubble.bg-light,
+.message-bubble.border {
+  background-color: #F0FDFA !important; /* very light teal/white */
+  border-color: #CCFBF1 !important;
+  color: #0F172A !important;
+}
+
+/* Remove any potential green body background */
+body {
+  background: white !important;
+}
+
+section {
+  background: inherit !important;
+}
+
+/* Force header/navbar to be visible with proper styling */
+.navbar {
+  background: #0A3D62 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 15px rgba(10,61,98,0.5) !important;
+  border-bottom: none !important;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+}
+
+.nav-link {
+  color: #ffffff !important;
+}
+
+/* NOTE: removed aggressive global background override to preserve component backgrounds */

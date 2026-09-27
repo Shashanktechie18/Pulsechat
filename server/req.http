@@ -1,0 +1,235 @@
+### ========== MERN CHAT APP API TESTING ==========
+### Base URL: http://localhost:5000
+
+### ✅ Health Check (No Auth Required)
+GET http://localhost:5000/
+Content-Type: application/json
+
+### ========== AUTHENTICATION ENDPOINTS ==========
+
+### ✅ 1. Register User (Test this first!)
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "king",
+  "email": "king@example.com",
+  "password": "King123!",
+  "confirmPassword": "King123!"
+}
+
+###
+
+### ✅ 2. Login User (Test after registration!)
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "king@example.com",
+  "password": "King123!"
+}
+
+###
+
+# Logout User
+POST http://localhost:5000/api/auth/logout
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+# Forgot Password
+POST http://localhost:5000/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+###
+
+# Reset Password
+POST http://localhost:5000/api/auth/reset-password/RESET_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "password": "NewPass123!",
+  "confirmPassword": "NewPass123!"
+}
+
+###
+
+# Verify Token
+GET http://localhost:5000/api/auth/verify
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### ========== CHAT ENDPOINTS ==========
+
+# Get All Messages (General Chat)
+GET http://localhost:5000/api/chat/messages
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+# Send Message to General Chat
+POST http://localhost:5000/api/chat/messages
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "content": "Hello, this is a test message! 🚀"
+}
+
+###
+
+# Get Messages with Pagination
+GET http://localhost:5000/api/chat/messages?page=1&limit=20
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+### ========== USER ENDPOINTS ==========
+
+# Get Current User Profile
+GET http://localhost:5000/api/users/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+# Get All Users
+GET http://localhost:5000/api/users
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+# Get Online Users
+GET http://localhost:5000/api/users/online
+Authorization: Bearer YOUR_TOKEN_HERE
+
+###
+
+# Update User Profile
+PUT http://localhost:5000/api/users/profile
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "username": "updateduser",
+  "avatar": "https://example.com/avatar.jpg"
+}
+
+### ========== DEBUGGING WORKFLOW - FOLLOW EXACTLY ==========
+
+### 🎯 DEBUG Step 1: Test Health Check (should work immediately)
+GET http://localhost:5000/
+Content-Type: application/json
+
+###
+
+### 🔍 DEBUG Step 2: Register a test user (run this first!)
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "debuguser",
+  "email": "debug@test.com",
+  "password": "Debug123!",
+  "confirmPassword": "Debug123!"
+}
+
+###
+
+### 🔍 DEBUG Step 3: Login (COPY THE ENTIRE TOKEN from response!)
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "debug@test.com",
+  "password": "Debug123!"
+}
+
+###
+
+### 🔍 DEBUG Step 4: Verify Token (paste FULL token here)
+### IMPORTANT: Replace PASTE_FULL_TOKEN_HERE with the complete token from login response
+### The token should be very long (like: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)
+GET http://localhost:5000/api/auth/verify
+Authorization: Bearer PASTE_FULL_TOKEN_HERE
+
+###
+
+### 🔍 DEBUG Step 5: Test user profile with same token
+GET http://localhost:5000/api/users/me
+Authorization: Bearer PASTE_FULL_TOKEN_HERE
+
+###
+
+### ✅ Step 6: Send a message to general chat (replace with real token)
+POST http://localhost:5000/api/chat/messages
+Content-Type: application/json
+Authorization: Bearer YOUR_ACTUAL_JWT_TOKEN
+
+{
+  "content": "Hello everyone! This is my first message 👋"
+}
+
+###
+
+### ✅ Step 7: Get all messages to see your message (replace with real token)
+GET http://localhost:5000/api/chat/messages
+Authorization: Bearer YOUR_ACTUAL_JWT_TOKEN
+
+### ========== TROUBLESHOOTING GUIDE ==========
+### 
+### ❌ "Not authorized, token failed" errors:
+### - Make sure you copied the COMPLETE token from login response
+### - Token should start with "eyJ" and be very long (200+ characters)
+### - Don't include extra spaces or line breaks when pasting
+### - Make sure JWT_SECRET in .env matches between token creation and verification
+### 
+### ❌ "JWT malformed" errors:
+### - You're using placeholder tokens like "YOUR_TOKEN_HERE" 
+### - Token format is incorrect or truncated
+### - Copy the EXACT token from login response
+### 
+### ❌ "User not found" errors:
+### - Token is valid but user was deleted from database
+### - Database connection issue
+### 
+### ❌ If you get "Connection refused" errors:
+### - Make sure server is running: cd server && npm start
+### - Check if port 5000 is available
+### - Verify MongoDB is running or MONGO_URI is correct
+### 
+### 🔍 DEBUGGING STEPS:
+### 1. Start server: cd server && npm start
+### 2. Register user (Step 2 above)
+### 3. Login user (Step 3 above) 
+### 4. Copy ENTIRE token from login response
+### 5. Paste token in Step 4 and test verify endpoint
+### 
+### ========== SOCKET.IO TESTING NOTES ==========
+### 
+### For real-time features, use the frontend client or a WebSocket testing tool
+### 
+### Socket Events to Emit:
+### - 'join' with userId to join the chat
+### - 'sendMessage' with { content: "message" }
+### - 'typing' with { sender: "username", isTyping: true/false }
+### 
+### Socket Events to Listen:
+### - 'newMessage' - Receive new messages
+### - 'getOnlineUsers' - Get updated online users list
+### - 'userTyping' - Receive typing indicators
+### 
+### Test Socket.IO at: ws://localhost:5000
+### 
+### ========== QUICK TEST CHECKLIST ==========
+### 
+### ✅ 1. Health Check → GET http://localhost:5000/
+### ✅ 2. Register User → POST /api/auth/register 
+### ✅ 3. Login User → POST /api/auth/login (copy the token!)
+### ✅ 4. Get Profile → GET /api/users/me (with real token)
+### ✅ 5. Send Message → POST /api/chat/messages (with real token)
+### ✅ 6. Get Messages → GET /api/chat/messages (with real token)
